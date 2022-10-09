@@ -1,0 +1,17 @@
+{
+  "name": "blogWebServer",
+  "version": "1.0.0",
+  "description": "A project that uses Node as a Webserver",
+  "main": "bin/www.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev nodemon ./bin/www.js",
+    "prod": "cross-env NODE_ENV=production nodemon ./bin/www.js"
+  },
+  "repository": "git@github.com:fullstacker37/webServer.git",
+  "author": "volibear <zhaop2014@sina.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.12"
+  }
+}
