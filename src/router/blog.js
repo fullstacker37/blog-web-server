@@ -4,7 +4,7 @@ const { SuccessModel, ErrorModel } = require('../model/responseModel');
 const handleBlogRouter = async (req, res) => {
   const method = req.method;
   const id = req.query.id;
-
+  console.log({method, path: req.path})
   // 获取博客列表
   if (method === 'GET' && req.path === '/api/blog/list') {
     const author = req.query.author || '';
