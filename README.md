@@ -11,10 +11,14 @@ A project that uses Node as a Webserver
 ## 3. 接口设计
 
 | 描述              | 接口              | 方法 | url 参数         | 备注                      |
-|-------------      |----------------   |-----|----------------  |------------------------  |
+|-------------     |----------------   |-----|----------------  |------------------------  |
 | 获取博客列表       | /api/blog/list    | get | author, keyword  | 参数为空，则不进行查询过滤  |
-| 获取一篇博客的内容  | /api/blog/detail  | get | id              |           -               |
-| 新增一篇博客       | /api/blog/create  | get | -                | post 新增的信息           |
-| 更新一篇博客       | /api/blog/update  | get | id               | postData 中有更新的内容    |
-| 删除一篇博客       | /api/blog/delete  | get | id               |           -               |
-| 登录              | /api/user/login   | get | -                | postData 中有用户名和密码  |
+| 获取博客详情       | /api/blog/detail  | get | id              |           -               |
+| 新增一篇博客       | /api/blog/create  | post | -                | post 新增的信息           |
+| 更新一篇博客       | /api/blog/update  | post | id               | postData 中有更新的内容    |
+| 删除一篇博客       | /api/blog/delete  | post | id               |           -               |
+| 登录              | /api/user/login   | post | -                | postData 中有用户名和密码  |
+
+## 4. 登录
+- cookie 和 session
+- session 写入 redis
