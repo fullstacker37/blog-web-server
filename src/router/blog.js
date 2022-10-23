@@ -1,6 +1,13 @@
 const { getList, getDetail, createBlog, updateBlog, deleteBlog } = require('../controller/blog');
 const { SuccessModel, ErrorModel } = require('../model/responseModel');
 
+// 统一的登录验证函数
+const loginCheck = req => {
+  if (!req.session.username) {
+    return Promise.resolve(new ErrorModel('尚未登录'))
+  }
+}
+
 const handleBlogRouter = async (req, res) => {
   const method = req.method;
   const id = req.query.id;
@@ -30,7 +37,12 @@ const handleBlogRouter = async (req, res) => {
   // 新增博客
   if (method === 'POST' && req.path === '/api/blog/create') {
     console.log('body============ ', req.body)
-    req.body.author = 'zhangsan' // 待开发登录时在改成真实的数据
+    const loginCheckResult = loginCheck(req)
+    if (loginCheckResult) {
+      // 未登录
+      return loginCheck
+    }
+    req.body.author = req.session.username
     const result = createBlog(req.body);
     return result.then(data => {
       return new SuccessModel(data);
@@ -39,6 +51,11 @@ const handleBlogRouter = async (req, res) => {
 
   // 更新博客
   if (method === 'POST' && req.path === '/api/blog/update') {
+    const loginCheckResult = loginCheck(req)
+    if (loginCheckResult) {
+      // 未登录
+      return loginCheck
+    }
     const result = updateBlog(id, req.body);
     return result.then(data => {
       if (data) {
@@ -51,13 +68,18 @@ const handleBlogRouter = async (req, res) => {
 
   // 删除博客
   if (method === 'POST' && req.path === '/api/blog/delete') {
-    const author = 'zhangsan' // 待开发登录时在改成真实的数据
-    const result = deleteBlog(id, author);
+    const loginCheckResult = loginCheck(req)
+    if (loginCheckResult) {
+      // 未登录
+      return loginCheck
+    }
+    const author = req.session.username
+    const result = deleteBlog(id, author)
     return result.then(data => {
       if (data) {
         return new SuccessModel();
       } else {
-        return new ErrorModel('删除博客失败');
+        return new ErrorModel('删除博客失败')
       }
     })
   }
