@@ -79,7 +79,7 @@ const serverHandle = (req, res) => {
 
   // 解析 session （使用redis）
   let needSetCookie = false
-  let userId = req.cookie.userId
+  let userId = req.cookie.userid
   if (!userId) {
     needSetCookie = true
     userId = `${Date.now()}_${Math.random()}`
