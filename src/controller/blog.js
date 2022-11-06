@@ -1,4 +1,5 @@
 const { exec } = require('../db/mysql')
+const xss = require('xss')
 
 const getList = (author, keyword) => {
   // 因为 author 和 keyword 是否有值不确定，防止 sql 语句报错，所以需要加 where 1=1
@@ -23,7 +24,9 @@ const getDetail = id => {
 }
 
 const createBlog = (blogData = {}) => {
-  const { title, content, author, createTime = Date.now() } = blogData
+  const { author, createTime = Date.now() } = blogData
+  const content = xss(blogData.content)
+  const title = xss(blogData.title)
   const sql = `insert into blogs(title, content, createTime, author) values('${title}','${content}',${createTime},'${author}')`
   return exec(sql).then(insertData => {
     return {
